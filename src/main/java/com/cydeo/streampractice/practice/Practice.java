@@ -196,7 +196,7 @@ public class Practice {
     }
 
     // Display the minimum salary an employee gets
-    public static Long getMinSalary() throws Exception {
+    public static Long getMinSalary() {
         return employeeService.readAll().stream()
                 .map(Employee::getSalary)
                 .reduce(Long::min)
@@ -204,14 +204,13 @@ public class Practice {
     }
     // Display the employee(s) who gets the minimum salary
     public static List<Employee> getMinSalaryEmployee() {
-        //TODO Implement the method
         return employeeService.readAll().stream()
-                .filter(employee -> employee.getSalary() == 2100)
+                .filter(employee -> employee.getSalary().equals(getMinSalary()))
                 .collect(Collectors.toList());
     }
 
     // Display the second minimum salary an employee gets
-    public static Long getSecondMinSalary() throws Exception {
+    public static Long getSecondMinSalary() {
         return employeeService.readAll().stream()
                 .map(Employee::getSalary)
                 .sorted()
@@ -224,7 +223,7 @@ public class Practice {
     public static List<Employee> getSecondMinSalaryEmployee() {
         //TODO Implement the method
         return employeeService.readAll().stream()
-                .filter(employee -> employee.getSalary() == 2200)
+                .filter(employee -> employee.getSalary().equals(getSecondMinSalary()))
                 .collect(Collectors.toList());
     }
 
@@ -298,13 +297,12 @@ public class Practice {
 
     // Display the employee whose job history start date is 01.01.2007 and job history end date is 31.12.2007 and department's name is 'Shipping'
     public static Employee getEmployeeOfJobHistoryWhoseStartDateIsFirstDayOfJanuary2007AndEndDateIsLastDayOfDecember2007AndDepartmentNameIsShipping() throws Exception {
-        //TODO Implement the method
         return jobHistoryService.readAll().stream()
                 .filter(jobHistory -> (jobHistory.getStartDate().equals(LocalDate.of(2007, 1, 1)) &&
                         jobHistory.getEndDate().equals(LocalDate.of(2007, 12, 31))))
-                .map(JobHistory::getEmployee)
+              //  .map(JobHistory::getEmployee)
                 .filter(employee -> employee.getDepartment().getDepartmentName().equals("Shipping"))
-                .findFirst().get();
+                .findFirst().get().getEmployee();
     }
 
     // Display all the employees whose first name starts with 'A'
