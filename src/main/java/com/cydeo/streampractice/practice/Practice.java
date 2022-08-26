@@ -139,26 +139,24 @@ public class Practice {
     public static Long getGrantDouglasSalary() throws Exception {
         return employeeService.readAll().stream()
                 .filter(employee -> (employee.getFirstName().equals("Douglas") && employee.getLastName().equals("Grant")))
-                .map(Employee::getSalary)
-                .findFirst().get();
+                //.map(Employee::getSalary)
+                .findFirst().get().getSalary();
 
     }
 
     // Display the maximum salary an employee gets
-    public static Long getMaxSalary() throws Exception {
+    public static Long getMaxSalary() {
         return employeeService.readAll().stream()
                 .max(Comparator.comparing(Employee::getSalary))
-                .map(Employee::getSalary)
-                .get();
+                //.map(Employee::getSalary)
+                .get().getSalary();
 
     }
 
     // Display the employee(s) who gets the maximum salary
     public static List<Employee> getMaxSalaryEmployee() {
-        Employee employeeHasMaxSalary = employeeService.readAll().stream()
-                .max(Comparator.comparing(Employee::getSalary)).get();
         return employeeService.readAll().stream()
-                .filter(employee -> employee.getSalary() == employeeHasMaxSalary.getSalary())
+                .filter(employee -> employee.getSalary().equals(getMaxSalary()))
                 .collect(Collectors.toList());
     }
 
@@ -166,8 +164,8 @@ public class Practice {
     public static Job getMaxSalaryEmployeeJob() throws Exception {
         return employeeService.readAll().stream()
                 .max(Comparator.comparing(Employee::getSalary))
-                .map(Employee::getJob)
-                .get();
+            //    .map(Employee::getJob)
+                .get().getJob();
     }
 
     // Display the max salary in Americas Region
@@ -175,27 +173,26 @@ public class Practice {
         return employeeService.readAll().stream()
                 .filter(employee -> employee.getDepartment().getLocation().getCountry().getRegion().getRegionName().equals("Americas"))
                 .max(Comparator.comparing(Employee::getSalary))
-                .map(Employee::getSalary)
-                .get();
+            //    .map(Employee::getSalary)
+                .get().getSalary();
     }
 
     // Display the second maximum salary an employee gets
-    public static Long getSecondMaxSalary() throws Exception {
+    public static Long getSecondMaxSalary() {
         return employeeService.readAll().stream()
                 .sorted(Comparator.comparing(Employee::getSalary).reversed())
-                .map(Employee::getSalary)
+              //  .map(Employee::getSalary)
                 .skip(1)
                 .findFirst()
-                .get();
+                .get().getSalary();
 
     }
 
     // Display the employee(s) who gets the second maximum salary
     public static List<Employee> getSecondMaxSalaryEmployee() {
         return employeeService.readAll().stream()
-                .filter(employee -> employee.getSalary() == 17000)
+                .filter(employee -> employee.getSalary().equals(getSecondMaxSalary()))
                 .collect(Collectors.toList());
-
     }
 
     // Display the minimum salary an employee gets
